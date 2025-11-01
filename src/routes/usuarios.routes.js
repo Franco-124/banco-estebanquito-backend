@@ -8,6 +8,9 @@ router.post("/usuarios",
 router.get("/usuarios",
     userMethods.getUsers);
 
+router.get("/usuarios/:id",
+    userMethods.getUser);
+
 router.delete("/usuarios/:id",
     userMethods.deleteUser);
 

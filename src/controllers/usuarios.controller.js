@@ -3,8 +3,8 @@ import {getConnection} from "../db/db.js";
 
 const CreateUser = async (req , res) => {
     try{
-        const {nombre, email, contraseña, numero_cuenta, tipo_cuenta, saldo}  = req.body;
-        const data = {nombre, email, contraseña, numero_cuenta, tipo_cuenta, saldo};
+        const {nombre, email, contraseña, numero_cuenta, tipo, saldo}  = req.body;
+        const data = {nombre, email, contraseña, numero_cuenta, tipo, saldo};
         const connection = await getConnection();
         const result = await connection.query("INSERT INTO usuarios SET ?", data);
         res.json({message: "User Created successfully"});
@@ -26,6 +26,13 @@ const getUsers = async (req, res) => {
         console.log(error);
         res.status(500).json({message: "Internal Server Error"});
     }
+}
+
+const getUser = async (req, res) => {
+    const connection = await getConnection();
+    const {id} = req.params;
+    const result = await connection.query("SELECT * FROM usuarios WHERE id = ?", [id]);
+    res.json(result[0]);
 }
 
 const deleteUser = async (req, res) => {
@@ -63,6 +70,7 @@ const updateUser = async (req, res) => {
 export const userMethods =  {
     CreateUser,
     getUsers,
+    getUser,
     deleteUser,
     updateUser
 }
