@@ -1,6 +1,7 @@
 import express from "express";
 import cors from "cors";
-import router from "./routes/usuarios.routes.js";
+import usuarios from "./routes/usuarios.routes.js";
+import auth from "./routes/auth.routes.js";
 
 const app = express();
 app.set("port", process.env.PORT || 3000);
@@ -13,6 +14,7 @@ app.use(cors({
 
 
 app.use(express.json());
-app.use(router);
+app.use(usuarios);
+app.use(auth);
 
 export default app;
