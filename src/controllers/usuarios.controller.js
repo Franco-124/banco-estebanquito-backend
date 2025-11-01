@@ -32,6 +32,7 @@ const getUser = async (req, res) => {
     const connection = await getConnection();
     const {id} = req.params;
     const result = await connection.query("SELECT * FROM usuarios WHERE id = ?", [id]);
+    console.log(result);
     res.json(result[0]);
 }
 
