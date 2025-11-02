@@ -1,5 +1,5 @@
 
-import {getConnection} from "../db/db.js";
+import {getConnection} from "../../db/db.js";
 
 
 const getUsers = async (req, res) => {
@@ -27,7 +27,6 @@ const getUser = async (req, res) => {
         const connection = await getConnection();
         const {id} = req.params;
         const result = await connection.query("SELECT * FROM usuarios WHERE id = ?", [id]);
-        console.log(result);
         res.json({
             status_code : 200,
             success:true,
@@ -49,7 +48,7 @@ const deleteUser = async (req, res) => {
         const {id} = req.params;
         const connection = await getConnection();
         const result = await connection.query("DELETE FROM usuarios WHERE id = ?", [id]);
-        console.log(result);
+
         res.json({
             status_code: 200,
             success:true, 

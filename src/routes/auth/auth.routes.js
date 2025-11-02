@@ -1,11 +1,11 @@
 import {Router} from "express";
-import {authMethods } from "../controllers/auth.controller.js";
+import {authMethods } from "../../controllers/auth/auth.controller.js";
 const router = Router();
 
-router.post("/auth/registrar_usuario",
+router.post("/registrar_usuario",
     authMethods.CreateUser);
 
-router.post("/auth/login_usuario",
+router.post("/login_usuario",
     authMethods.LoginUser);
 
 export default router;

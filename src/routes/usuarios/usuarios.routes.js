@@ -1,17 +1,17 @@
 import {Router} from "express";
-import { userMethods } from "../controllers/usuarios.controller.js";
+import { userMethods } from "../../controllers/usuarios/usuarios.controller.js";
 const router = Router();
 
-router.get("/usuarios",
+router.get("/",
     userMethods.getUsers);
 
-router.get("/usuarios/:id",
+router.get("/:id",
     userMethods.getUser);
 
-router.delete("/usuarios/:id",
+router.delete(":id",
     userMethods.deleteUser);
 
-router.put("/usuarios/:id",
+router.put("/:id",
     userMethods.updateUser);
 
 export default router;

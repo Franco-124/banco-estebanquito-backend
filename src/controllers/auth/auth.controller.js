@@ -1,4 +1,4 @@
-import {getConnection} from "../db/db.js";
+import {getConnection} from "../../db/db.js";
 
 
 const CreateUser = async (req , res) => {
@@ -39,7 +39,8 @@ const LoginUser = async (req, res) => {
         status_code: 200,
         success: true,
         response: "Inicio de sesión exitoso",
-        nombre_usuario : result[0].nombre
+        nombre_usuario : result[0].nombre,
+        id: result[0].id
       });
       
     } else {
