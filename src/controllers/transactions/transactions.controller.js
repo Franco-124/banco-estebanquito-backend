@@ -14,7 +14,7 @@ const getTransactionsByUser = async (req, res) => {
         })
         
     }catch(error){
-        res.status_code(500).json({
+        res.status(500).json({
             status_code: 500,
             success: true,
             response: "Error tratanto de recuperar las transacciones del usuario"

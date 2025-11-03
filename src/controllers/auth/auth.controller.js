@@ -40,7 +40,9 @@ const LoginUser = async (req, res) => {
         success: true,
         response: "Inicio de sesión exitoso",
         nombre_usuario : result[0].nombre,
-        id: result[0].id
+        id: result[0].id,
+        saldo: result[0].saldo,
+        tipo: result[0].tipo
       });
       
     } else {
