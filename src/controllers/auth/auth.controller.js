@@ -42,7 +42,8 @@ const LoginUser = async (req, res) => {
         nombre_usuario : result[0].nombre,
         id: result[0].id,
         saldo: result[0].saldo,
-        tipo: result[0].tipo
+        tipo: result[0].tipo,
+        numero_cuenta: result[0].numero_cuenta
       });
       
     } else {
