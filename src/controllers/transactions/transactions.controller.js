@@ -88,22 +88,39 @@ const DepostitMoney = async (req, res) => {
         const fecha = hoy.toISOString().split('T')[0]; 
         const {usuario_id, monto} = req.body;
 
-        if (monto <= 0){
+        if (typeof monto !== 'string' && typeof monto !== 'number') {
             return res.status(400).json({
                 status_code: 400,
                 success: false,
-                response: "El monto a depositar debe ser mayor a cero"
-            })
+                response: "El monto debe ser un numero válido"
+            });
+        }
+    
+        const cantidad = parseFloat(monto);
+        if (!Number.isFinite(cantidad) || cantidad <= 0) {
+            return res.status(400).json({
+                status_code: 400,
+                success: false,
+                response: "El monto a depositar debe ser un número válido y mayor a cero"
+            });
         }
 
-        
-        await executeDeposit(connection, usuario_id, monto, fecha, 'deposito');
+        if (!Number.isInteger(cantidad)) {
+            return res.status(400).json({
+                status_code: 400,
+                success: false,
+                response: "El monto a depositar debe ser un número valido y entero"
+            });
+        }
+                
+        await executeDeposit(connection, usuario_id, cantidad, fecha, 'deposito');
         
         res.json({
             status_code: 200,
             success: true,
             response: "El deposito se ha realizado con exito"
         });
+
     }catch(error){
         console.log(error);
         res.status(500).json({
@@ -128,15 +145,32 @@ const WithdrawMoney = async (req, res) => {
         const fecha = hoy.toISOString().split('T')[0]; 
         const {usuario_id, monto} = req.body;
 
-        if (monto <= 0){
+        if (typeof monto !== 'string' && typeof monto !== 'number') {
             return res.status(400).json({
                 status_code: 400,
                 success: false,
-                response: "El monto a retirar debe ser mayor a cero"
-            })
+                response: "El monto debe ser un numero válido"
+            });
         }
 
-        const verification = await VerifyAmmount(connection, usuario_id, monto);
+        const cantidad = parseFloat(monto);
+        if (!Number.isFinite(cantidad) || cantidad <= 0) {
+            return res.status(400).json({
+                status_code: 400,
+                success: false,
+                response: "El monto a retirar debe ser un número válido y mayor a cero"
+            });
+        }
+
+        if (!Number.isInteger(cantidad)) {
+            return res.status(400).json({
+                status_code: 400,
+                success: false,
+                response: "El monto a retirar debe ser un número entero"
+            });
+        }
+
+        const verification = await VerifyAmmount(connection, usuario_id, cantidad);
 
         if (!verification){
             return res.status(400).json({
@@ -146,7 +180,7 @@ const WithdrawMoney = async (req, res) => {
             })
         }
         
-        await executeWithdraw(connection, usuario_id, monto, fecha, 'retiro');
+        await executeWithdraw(connection, usuario_id, cantidad, fecha, 'retiro');
         
         res.json({
             status_code: 200,
@@ -172,15 +206,32 @@ const TransferMoney = async (req, res) => {
         const fecha = hoy.toISOString().split('T')[0]; 
         const {usuario_id, cuenta_destino, monto} = req.body;
 
-        if (monto <= 0){
+        if (typeof monto !== 'string' && typeof monto !== 'number') {
             return res.status(400).json({
                 status_code: 400,
                 success: false,
-                response: "El monto a transferir debe ser mayor a cero"
-            })
+                response: "El monto debe ser un string o número válido"
+            });
         }
 
-        const verification = await VerifyAmmount(connection, usuario_id, monto);
+        const cantidad = parseFloat(monto);
+        if (!Number.isFinite(cantidad) || cantidad <= 0) {
+            return res.status(400).json({
+                status_code: 400,
+                success: false,
+                response: "El monto a transferir debe ser un número válido y mayor a cero"
+            });
+        }
+
+        if (!Number.isInteger(cantidad)) {
+            return res.status(400).json({
+                status_code: 400,
+                success: false,
+                response: "El monto a transferir debe ser un número entero"
+            });
+        }
+
+        const verification = await VerifyAmmount(connection, usuario_id, cantidad);
 
         if (!verification){
             return  res.status(400).json({
@@ -201,8 +252,8 @@ const TransferMoney = async (req, res) => {
         }
 
         const cuenta_destino_id = cuenta_id_result[0].id;
-        await executeWithdraw(connection, usuario_id, monto, fecha, 'transferencia');
-        await executeDeposit(connection, cuenta_destino_id, monto, fecha, 'depósito');
+        await executeWithdraw(connection, usuario_id, cantidad, fecha, 'transferencia');
+        await executeDeposit(connection, cuenta_destino_id, cantidad, fecha, 'depósito');
 
         res.json({
             status_code: 200,
