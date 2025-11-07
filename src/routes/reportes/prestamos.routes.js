@@ -7,7 +7,7 @@ router.get("/:id",
     LoanMethods.GetLoansByUser
 )
 
-router.post("/usuario/:id",
+router.post("/solicitar/:id",
     LoanMethods.RegisterLoan
 )
 
