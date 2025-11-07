@@ -3,6 +3,7 @@ import cors from "cors";
 import usuarios from "./routes/usuarios/usuarios.routes.js";
 import auth from "./routes/auth/auth.routes.js";
 import transacciones from "./routes/transactions/transactions.routes.js"
+import prestamos from "./routes/reportes/prestamos.routes.js"
 
 const app = express();
 app.set("port", process.env.PORT || 3000);
@@ -18,5 +19,6 @@ app.use(express.json());
 app.use("/usuarios", usuarios);
 app.use("/auth", auth);
 app.use("/transacciones", transacciones)
+app.use("/prestamos", prestamos)
 
 export default app;
