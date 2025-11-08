@@ -48,6 +48,7 @@ const VerifyAccountNumber = async  (req, res) => {
         }
 
     }catch(error){
+        console.log(error)
         res.status(500).json({
             status_code: 500,
             success: false,
@@ -252,8 +253,8 @@ const TransferMoney = async (req, res) => {
         }
 
         const cuenta_destino_id = cuenta_id_result[0].id;
-        await executeWithdraw(connection, usuario_id, cantidad, fecha, 'transferencia');
-        await executeDeposit(connection, cuenta_destino_id, cantidad, fecha, 'depósito');
+        await executeWithdraw(connection, usuario_id, cantidad, fecha, 'transferencia_saliente');
+        await executeDeposit(connection, cuenta_destino_id, cantidad, fecha, 'transferencia_entrante');
 
         res.json({
             status_code: 200,
